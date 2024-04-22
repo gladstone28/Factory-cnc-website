@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enhanced DIY Furniture Tips</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+    .card {
+        background-color: #fff;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        width: calc(33.333% - 20px);
+        cursor: pointer;
+        transition: transform 0.3s ease-in-out;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        position: relative;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    a {
+        color: #0077cc;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+        .card {
+            width: calc(50% - 20px);
+        }
+    }
+    @media (max-width: 480px) {
+        .card {
+            width: calc(100% - 20px);
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="container"></div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <a id="modal-link" href="" target="_blank">Learn more</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const data = [
+        { id: 'start-small', title: 'Start Small', description: 'Example: Building a simple wooden coffee table using basic tools.', detail: 'Begin with simple projects like building a birdhouse or a coffee table.', link: 'https://www.instructables.com/' },
+        { id: 'plan-ahead', title: 'Plan Ahead', description: 'Example: Creating a detailed drawing and itemized list of materials for a bookshelf.', detail: 'Make a detailed plan and budget before starting your project.', link: 'https://www.woodmagazine.com/project-plans/free' },
+        { id: 'choose-right-materials', title: 'Choose the Right Materials', description: 'Example: Selecting pine wood for beginner projects.', detail: 'Select materials that fit your skill level and budget. Consider sustainability and durability.', link: 'https://www.wood-database.com/wood-articles/wood-basics/' },
+        { id: 'use-online-resources', title: 'Use Online Resources', description: 'Example: Learning from YouTube tutorials on woodworking.', detail: 'Websites like YouTube, Pinterest, and Instructables offer a wealth of tutorials and inspiration.', link: 'https://www.youtube.com/results?search_query=DIY+furniture+projects' },
+        { id: 'measure-mark', title: 'Measure and Mark Carefully', description: 'Example: Using a tape measure and a carpenter\'s square for precision.', detail: 'Accurate measurements and markings ensure a professional-looking finish.', link: 'https://www.familyhandyman.com/list/woodworking-tips/' },
+        { id: 'sand-finish', title: 'Sand and Finish', description: 'Example: Sanding a bench with fine-grit sandpaper.', detail: 'Don\'t skip the sanding and finishing stages – they make a huge difference in the final product\'s quality.', link: 'https://www.finewoodworking.com/2006/11/01/the-basics-of-sanding' },
+        { id: 'upcycle-repurpose', title: 'Upcycle and Repurpose', description: 'Example: Turning an old ladder into a bookshelf.', detail: 'Get creative with old furniture or materials to reduce waste and add character.', link: 'https://www.apartmenttherapy.com/categories/furniture-makeovers' },
+        { id: 'ask-for-help', title: 'Don\'t Be Afraid to Ask for Help', description: 'Example: Consulting a carpenter for advice on a tricky join.', detail: 'Consult with experts or join a DIY community for support and guidance.', link: 'https://www.reddit.com/r/DIY/' },
+        { id: 'be-patient', title: 'Be Patient and Persistent', description: 'Example: Building a wardrobe over several weekends.', detail: 'DIY furniture making can be challenging, but the sense of accomplishment is worth it.', link: 'https://www.thisoldhouse.com/woodworking/21015223/pro-tips-for-beginner-woodworkers' },
+        { id: 'have-fun', title: 'Have Fun', description: 'Example: Experimenting with different finishes on test pieces.', detail: 'Enjoy the process, and don\'t stress too much about mistakes – they\'re an opportunity to learn and improve.', link: 'https://www.popularmechanics.com/home/how-to-plans/how-to/g2834/woodworking-projects/' }
+    ];
+
+    const container = document.querySelector('.container');
+    data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<h2>${item.title}</h2><p>${item.description}</p>`;
+        card.onclick = () => openModal(item.title, item.detail, item.link);
+        container.appendChild(card);
+    });
+
+    function openModal(title, description, link) {
+        const modal = document.getElementById('modal');
+        document.getElementById('modal-title').textContent = title;
+        document.getElementById('modal-description').textContent = description;
+        document.getElementById('modal-link').href = link;
+        modal.style.display = 'block';
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+});
+
+function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
